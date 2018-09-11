@@ -7364,3 +7364,11 @@ body.skin-3 {
     border-color: #cccccc!important;
 }
 
+.input_width80{
+    width: 80% !important;
+}
+
+.input_width100{
+    width: 100% !important;
+}
+

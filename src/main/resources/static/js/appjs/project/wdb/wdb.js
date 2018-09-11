@@ -1,7 +1,11 @@
 
 var prefix = "/project/wdb"
 $(function() {
+	debugger
+    initSel("type","/common/sysDict/list/show_hide",{},"name","value");
+
 	load();
+
 });
 
 function load() {
@@ -53,34 +57,18 @@ function load() {
 						columns : [
 								{
 									checkbox : true
-								},
-																{
-									field : 'id', 
-									title : '' 
-								},
-																{
-									field : 'xmid', 
-									title : '项目id' 
-								},
+								},								{
+                                field : 'typeName',
+                                title : '类型名称'
+                           		 },
 																{
 									field : 'xmmc', 
 									title : '项目名称' 
 								},
-																{
-									field : 'type', 
-									title : '类型编号' 
-								},
-																{
-									field : 'typeName', 
-									title : '类型名称' 
-								},
+
 																{
 									field : 'fileName', 
 									title : '文件名称' 
-								},
-																{
-									field : 'fcbz', 
-									title : '废除标志 1正常0 废除' 
 								},
 																{
 									title : '操作',
@@ -90,7 +78,7 @@ function load() {
 										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
 												+ row.id
 												+ '\')"><i class="fa fa-edit"></i></a> ';
-										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="removeone(\''
 												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
 										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
@@ -124,7 +112,7 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
-function remove(id) {
+function removeone(id) {
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
 	}, function() {

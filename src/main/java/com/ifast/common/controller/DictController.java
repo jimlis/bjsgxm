@@ -129,11 +129,12 @@ public class DictController extends AdminBaseController {
     
     @Log("根据key查询数据字典信息")
     @ResponseBody
-    @GetMapping("/list/{type}")
+    @RequestMapping("/list/{type}")
     public List<DictDO> listByType(@PathVariable("type") String type) {
         // 查询列表数据
         Map<String, Object> map = new HashMap<>(16);
         map.put("type", type);
+        map.put("delFlag","0");
         List<DictDO> dictList = sysDictService.selectByMap(map);
         return dictList;
     }
