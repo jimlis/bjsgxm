@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     http://www.springframework.org/schema/cache 
+     http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+     http://www.springframework.org/schema/mvc    
+     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<!-- 自动扫描包 -->
+	<context:component-scan
+		base-package="com">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+	</context:component-scan>
+
+	<!-- 引入jdbc配置文件 -->
+	<context:property-placeholder
+		location="classpath:jdbc.properties" />
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="servicePointcut"
+			expression="execution(* com..service..*.insert*(..)) || execution(* com..service..*.del*(..))|| execution(* com..service..*.update*(..))|| execution(* com..service..*.create*(..))|| execution(* com..service..*.add*(..))|| execution(* com..service..*.save*(..))" />
+
+		<aop:advisor pointcut-ref="servicePointcut"
+			advice-ref="serviceAdvice" />
+
+		<aop:advisor pointcut-ref="druid-stat-pointcut"
+			advice-ref="druid-stat-interceptor" />
+
+	</aop:config>
+
+
+	<bean id="druid-stat-interceptor"
+		class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+	</bean>
+
+	<bean id="druid-stat-pointcut"
+		class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+		scope="prototype">
+		<property name="patterns">
+			<list>
+				<value>com.*.service.*</value>
+				<value>com.*.dao.*</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 阿里巴巴druid配置 -->
+	<bean id="dataSource"
+		class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+		destroy-method="close">
+		<property name="driverClassName" value="${spring.datasource.driverClassName}" />
+		<property name="url" value="${spring.datasource.url}" />
+		<property name="username" value="${spring.datasource.username}" />
+		<property name="password" value="${spring.datasource.password}" />
+
+		<!-- 初始化大小、最小、最大 -->
+		<property name="initialSize" value="${spring.datasource.initialSize}" />
+		<property name="minIdle" value="${spring.datasource.minIdle}" />
+		<property name="maxActive" value="${spring.datasource.maxActive}" />
+
+		<!-- 配置连接等待超时时间 -->
+		<property name="maxWait" value="${spring.datasource.maxWait}" />
+
+		<!-- 配置检测，关闭不使用连接 -->
+		<property name="timeBetweenEvictionRunsMillis"
+			value="${spring.datasource.timeBetweenEvictionRunsMillis}" />
+
+		<!-- 配置连接池中连接生存的时间(最小) -->
+		<property name="minEvictableIdleTimeMillis"
+			value="${spring.datasource.minEvictableIdleTimeMillis}" />
+		<!-- 连接是否失效 -->
+		<property name="testWhileIdle" value="${spring.datasource.testWhileIdle}" />
+		<!-- 这里建议配置为TRUE，防止取到的连接不可用，生产环境testOnBorrow，testOnReturn都关闭 -->
+		<property name="testOnBorrow" value="${spring.datasource.testOnBorrow}" />
+		<property name="testOnReturn" value="${spring.datasource.testOnReturn}" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements"
+			value="${spring.datasource.poolPreparedStatements}" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="${spring.datasource.maxPoolPreparedStatementPerConnectionSize}" />
+
+		<!-- 验证连接有效与否的SQL，不同的数据配置不同 -->
+		<property name="validationQuery"
+			value="${spring.datasource.validationQuery}" />
+		<!-- 监控统计用的filter:stat ,日志用的filter:log4j ,防御sql注入的filter:wall -->
+		<property name="filters" value="${spring.datasource.filters}" />
+		<!-- 如果同时配置了filters和proxyFilters， 是组合关系，并非替换关系,所以可以选择是否配置 -->
+		 <property name="proxyFilters">
+		 	<list>
+		 		<ref bean="logFilter" />
+		 	</list>
+		 </property>
+	</bean>
+
+	<bean id="logFilter"
+		class="com.alibaba.druid.filter.logging.Log4jFilter">
+		<property name="statementExecutableSqlLogEnable" value="true" />
+	</bean>
+
+	<!-- 完美整合spring和MyBatis-puls -->
+	<bean id="sqlSessionFactory"
+		class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 加载mybaits配置文件 -->
+		<property name="configLocation"
+			value="classpath:mybatis-config.xml"></property>
+		<!-- 扫描实体类型别名 -->
+		<property name="typeAliasesPackage"
+			value="/com/**/domain"></property>
+		<!-- 配置数据库提供厂商 -->
+		<!-- 自动扫描dao.xml文件 -->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:/mapper/**/*Mapper.xml</value>
+			</list>
+		</property>
+
+		<!-- MP 全局配置注入 -->
+		<property name="globalConfig" ref="globalConfig" />
+
+		<!-- 插件 -->
+		<property name="plugins">
+			<array>
+				<!-- 分页插件 -->
+				<ref bean="paginationInterceptor" />
+				<!-- 乐观锁插件 -->
+				<ref bean="optimisticLockerInterceptor" />
+				<!-- 性能拦截器，兼打印sql，不建议生产环境配置 -->
+				<ref bean="performanceInterceptor" />
+			</array>
+		</property>
+	</bean>
+
+	<!-- 定义 MP 全局策略 -->
+	<bean id="globalConfig"
+		class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+		<!-- 逻辑删除 定义下面3个参数 -->
+		<property name="sqlInjector" ref="logicSqlInjector" />
+		<property name="logicDeleteValue" value="0" />
+		<property name="logicNotDeleteValue" value="1" />
+		<!-- 全局ID类型： 0, "数据库ID自增"， 1, "用户输入ID", 2, "全局唯一ID", 3, "全局唯一ID" -->
+		<property name="idType" value="0"  />
+		<!-- 2.1-gamma+ 数据库自动识别，无需配置数据库类型 -->
+		<property name="dbType" value="mysql" />
+		<!-- 字段验证策略 字符串验证"" -->
+		<property name="fieldStrategy" value="2" />
+	</bean>
+
+	<!-- 逻辑删除Sql注入器 逻辑删除的字段需要注解 @TableLogic -->
+	<bean id="logicSqlInjector"
+		class="com.baomidou.mybatisplus.mapper.LogicSqlInjector" />
+
+	<!-- 分页插件 -->
+	<bean id="paginationInterceptor"
+		class="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
+		<property name="localPage" value="true"></property>
+	</bean>
+
+	<!-- 乐观锁插件 注解实体字段 @Version 必须要！ -->
+	<bean id="optimisticLockerInterceptor"
+		class="com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor">
+	</bean>
+
+	<!-- 性能拦截器，兼打印sql，不建议生产环境配置 -->
+	<bean id="performanceInterceptor"
+		class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor">
+		<!--maxTime SQL 执行最大时长，超过自动停止运行，有助于发现问题。 -->
+		<property name="maxTime" value="600000" />
+		<!--format SQL是否格式化 默认false -->
+		<property name="format" value="false" />
+	</bean>
+
+	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.**.dao" />
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- (事务管理)transaction manager -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:advice id="serviceAdvice"
+		transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED"
+				rollback-for="Throwable" />
+			<tx:method name="del*" propagation="REQUIRED"
+				rollback-for="Throwable" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="Throwable" />
+			<tx:method name="create*" propagation="REQUIRED"
+				rollback-for="Throwable" />
+			<tx:method name="add*" propagation="REQUIRED"
+				rollback-for="Throwable" />
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="Throwable" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+
+</beans>

@@ -1,0 +1,14 @@
+//通用跳转
+function open(fa,sub,id,url){
+	mui(fa).on('tap',sub,function(){
+	  //获取在标签中设置了url的
+	  if(url==null){
+	  	var url = this.getAttribute("url");
+	  }
+	  //打开页面
+	  mui.openWindow({
+	    id:id,
+	    url:url
+	  });
+	}) 
+}

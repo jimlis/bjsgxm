@@ -1,0 +1,30 @@
+/**服务端地址*/
+var serverPath="http://127.0.0.1:8080/";
+var userApiPath=serverPath+"api/user/";
+var deptApiPath=serverPath+"api/dept/";
+
+/**
+ * 将null undefined  "null" 转换为 ""
+ * @param {Object} str 字符串
+ */ 
+function nullToEmpty(str){
+	return (str==null||typeof(str)=="undefined"||str=="null")?"":str;
+}
+
+/**
+ * 判断字符是否为空
+ * @param {Object} str 字符串
+ * @return true-空 false-不为空
+ */
+function isEmpty(str){
+	return nullToEmpty(str)=="";
+}
+
+/**
+ * 判断字符是否不为空
+ * @param {Object} str
+ *  @return true-不为空 false-空
+ */
+function isNotEmpty(str){
+	return !isEmpty(str);
+}

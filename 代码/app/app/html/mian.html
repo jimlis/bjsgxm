@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>博建施工管理系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+		<script type="text/javascript">
+			document.write("<link rel=\"stylesheet\" href=\"../css/app.css?"+Math.random()+"\" type=\"text/css\" media=\"screen\"/>");
+			document.write("<script src=\"../js/common.js?"+Math.random()+"\" type=\"text/javascript\" charset=\"utf-8\"><\/script>");
+			
+			function to(url){
+				window.location.href=url;
+			}
+		</script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav" >
+			<h1 class="mui-title" >博建项目施工管理</h1>
+		</header>
+		<div class="mui-content">
+		        <ul id="list" class="mui-table-view mui-grid-view mui-grid-9">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
+		                    <div class="mui-media-body" >管理架构及各功能</div>
+		                    <div class="mui-media-body" >组别职能</div></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
+		                    <div class="mui-media-body" >项目各项程序之</div>
+		                    <div class="mui-media-body">管理流程</div></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
+		                    <div class="mui-media-body">标准工作审批</div>
+		                    <div class="mui-media-body">流程表格</div></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" onclick="to('txl/zzjg.html')">
+		                    <div class="mui-media-body" >组织功能组别/项目管</div>
+		                    <div class="mui-media-body" >理部人员联系讯息</div></li>
+		        	<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
+		                   <div class="mui-media-body">公司公告</div>
+		                   <div class="mui-media-body"></div></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
+		                    <div class="mui-media-body"> </div>
+		                    <div class="mui-media-body"> </div></li>
+		             <hr />
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
+		                    <div class="mui-media-body">PMC项目</div>
+		                    <div class="mui-media-body"></div></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
+		                    <div class="mui-media-body">PMC项目</div>
+		                    <div class="mui-media-body" value= "22"></div></li>
+		            
+		        </ul> 
+		</div>
+		
+		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+			  preloadPages:[
+			    {
+			      url:'txl/zzjg.html',
+			      id:'zzjg',
+			    }
+			  ],
+			  preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
+			});
+	
+			mui('.mui-content').setAttribute("date",22564);
+			mui.plusReady(function(){
+				var zzjg = mui.preload({
+				    url:'txl/zzjg.html',
+			     	id:'txl/zzjg.html'
+				});
+				
+				setTimeout(function(){
+					var array = plus.webview.all();
+					if(array){
+						for(var i=0,len=array.length;i<len;i++){
+						    	console.log(array[i].getURL());
+						    	console.log(i);
+					        }
+					}
+				},5000)
+			});
+			open('.mui-content','.mui-table-view-cell','zzjg','txl/ry.html');
+			/*var detailPage = null;
+			mui(".mui-content").on('tap','.mui-table-view-cell',function(){
+			  //获取id
+			  var id = this.getAttribute("class");
+			  try{
+				  //获得详情页面
+				  if(!detailPage){
+				    detailPage = plus.webview.getWebviewById('zzjg');
+				  }
+				  //传值给详情页面，通知加载新数据
+				  mui.fire(detailPage,'zzjg',{id:id});
+			  }catch(e){
+			  	console.log(e.message);
+			  }
+			  //打开新闻详情
+			  mui.openWindow({
+			    id:'zzjg',
+			    url:'txl/zzjg.html'
+			  });
+			}) */
+		</script>
+	</body>
+</html>
