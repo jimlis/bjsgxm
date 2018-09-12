@@ -5,23 +5,14 @@
  id：如果使用预加载的情况下直接通过id跳转
  url：在id失效的情况下使用url直接跳转*/
 function open(fa,sub,id,url){
-	
-	
-	mui(fa).on('tap',sub,function(){
-		console.log(mui(fa).getAttribute("date"));
-	  //打开页面
-	  mui.openWindow({
-	    id:id,
-	    url:url
-	  });
-	});
-
-//通用跳转
-function open(fa,sub,id,url){
 	mui(fa).on('tap',sub,function(){
 	  //获取在标签中设置了url的
 	  if(url==null){
 	  	var url = this.getAttribute("url");
+	  	url=url+'?a=1';
+	  }
+	  if(url==null){
+	  	return
 	  }
 	  //打开页面
 	  mui.openWindow({
@@ -29,7 +20,7 @@ function open(fa,sub,id,url){
 	    url:url
 	  });
 	}) 
-
+}
 /**服务端地址*/
 var serverPath="http://127.0.0.1:8080/";
 var userApiPath=serverPath+"api/user/";

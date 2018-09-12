@@ -15,7 +15,7 @@ function login(){
 		debugger
 			if(result&&result.token){
 				localStorage.setItem("token",result.token);
-				window.location.href="../mian.html";
+				window.location.href="../main.html";
 			}
 	});
 }
