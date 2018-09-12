@@ -2,6 +2,7 @@ package com.ifast.oss.service;
 
 import com.ifast.common.base.CoreService;
 import com.ifast.oss.domain.FileDO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <pre>
@@ -26,4 +27,12 @@ public interface FileService extends CoreService<FileDO> {
      */
     String upload(byte[] uploadBytes, String fileName);
 
+    /**
+     * <pre>
+     * 上传文件到硬盘
+     * </pre>、
+     * @param file 文件对象
+     * @return FileDO 文件对象
+     */
+    FileDO uploadFile (MultipartFile file) throws Exception;
 }

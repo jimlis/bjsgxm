@@ -10,24 +10,28 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
+							<input type="hidden" name="id" id="id">
+							<input type="hidden" name="fileIds" id="fileIds">
+							<input type="hidden" name="typeName" id="typeName">
+							<input type="hidden" name="xmmc" id="xmmc">
 							<div class="form-group">
 								<label class="col-sm-3 control-label">类型：</label>
 								<div class="col-sm-8">
-									<select  name="type" id="type" class="selectpicker input_width100" placeholder="类型">
+									<select  name="type" id="type" onchange="typeOnchang(this)" class="selectpicker input_width100" placeholder="类型">
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">项目：</label>
 								<div class="col-sm-8">
-									<select  name="type" id="type" class="selectpicker input_width100" placeholder="类型">
+									<select  name="xmid" id="xmid" onchange="xmOnchang(this)" class="selectpicker input_width100" data-live-search="true"  placeholder="项目">
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">文件名称：</label>
 								<div class="col-sm-8">
-									<input id="xmmc" name="xmmc" class="form-control" type="text">
+									<input id="fileName" name="fileName" class="form-control" type="text" placeholder="文件名称">
 								</div>
 							</div>
 							<div class="form-group">
@@ -37,7 +41,7 @@
 									</button>
 								</label>
 								<div class="col-sm-8">
-									<input id="xmmc" name="xmmc" class="form-control" type="text">
+										<div id="fileList"></div>
 								</div>
 							</div>
 

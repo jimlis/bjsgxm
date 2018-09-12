@@ -22,23 +22,61 @@ public class FileDO extends Model<FileDO> implements Serializable {
     //
     @TableId
     private Long id;
-    // 文件类型
+    /**
+     * 业务表名
+     */
+    private  String busType;
+    /**
+     * 业务id
+     */
+    private  Long busId;
+    /**
+     * 文件类型
+     */
     private Integer type;
-    // URL地址
+    /**
+     * 文件名称
+     */
+    @TableField()
+    private  String fileName;
+    /**
+     * 文件大小
+     */
+    private  Long fileSize;
+    /**
+     * 创建人id
+     */
+    private  Long createUserId;
+    /**
+     * 创建人名称
+     */
+    private  String createUserName;
+    /**
+     * 创建人部门id
+     */
+    private  Long createDeptId;
+    /***
+     * 创建人部门名称
+     */
+    private  String createDeptName;
+    /**
+     * URL地址
+     */
     private String url;
+
     // 创建时间
     private Date createDate;
 
     public FileDO() {
-        super();
+
     }
 
-    public FileDO(Integer type, String url, Date createDate) {
-        super();
-        this.type = type;
-        this.url = url;
-        this.createDate = createDate;
+    public FileDO(int type, String url, Date date) {
+        this.type=type;
+        this.url=url;
+        this.createDate=date;
     }
+
 
     /**
      * 设置：
@@ -96,9 +134,134 @@ public class FileDO extends Model<FileDO> implements Serializable {
         return createDate;
     }
 
+    /**
+     * 获取：业务表名
+     */
+    public String getBusType() {
+        return busType;
+    }
+
+    /**
+     * 设置：业务表名
+     */
+    public void setBusType(String busType) {
+        this.busType = busType;
+    }
+
+    /**
+     * 获取：业务id
+     */
+    public Long getBusId() {
+        return busId;
+    }
+
+    /**
+     * 设置：业务表名
+     */
+    public void setBusId(Long busId) {
+        this.busId = busId;
+    }
+
+    /**
+     * 获取：文件名称
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * 设置：文件名称
+     */
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    /**
+     * 获取：文件大小
+     */
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    /**
+     * 设置：文件大小
+     */
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    /**
+     * 获取：创建人id
+     */
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    /**
+     * 设置：创建人id
+     */
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    /**
+     * 获取：创建人名称
+     */
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    /**
+     * 设置：创建人名称
+     */
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    /**
+     * 获取：创建人部门id
+     */
+    public Long getCreateDeptId() {
+        return createDeptId;
+    }
+
+    /**
+     * 设置：创建人部门id
+     */
+    public void setCreateDeptId(Long createDeptId) {
+        this.createDeptId = createDeptId;
+    }
+
+    /**
+     * 获取：创建人部门名称
+     */
+    public String getCreateDeptName() {
+        return createDeptName;
+    }
+
+    /**
+     * 设置：创建人部门名称
+     */
+    public void setCreateDeptName(String createDeptName) {
+        this.createDeptName = createDeptName;
+    }
+
     @Override
     public String toString() {
-        return "FileDO{" + "id=" + id + ", type=" + type + ", url='" + url + '\'' + ", createDate=" + createDate + '}';
+        return "FileDO{" +
+                "id=" + id +
+                ", busType='" + busType + '\'' +
+                ", busId=" + busId +
+                ", type=" + type +
+                ", fileName='" + fileName + '\'' +
+                ", fileSize=" + fileSize +
+                ", createUserId=" + createUserId +
+                ", createUserName='" + createUserName + '\'' +
+                ", createDeptId=" + createDeptId +
+                ", createDeptName='" + createDeptName + '\'' +
+                ", url='" + url + '\'' +
+                ", createDate=" + createDate +
+                '}';
     }
 
     @Override

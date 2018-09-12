@@ -19,6 +19,7 @@ function  initSel(domid,url,data,keyName,valueName) {
             type:"POST",
             dataType:"json",
             data:data||{},
+            async : false,
             success:function(result){
                 if(result&&result.length>0){
                     var $dom=$("#"+domid);

@@ -1,11 +1,7 @@
 
-var prefix = "/project/wdb"
+var prefix = "/project/xmjb"
 $(function() {
-
-    initSel("type","/common/sysDict/list/wjlx",{},"name","value");
-
 	load();
-
 });
 
 function load() {
@@ -33,14 +29,10 @@ function load() {
 						queryParamsType : "",
 						// //设置为limit则会发送符合RESTFull格式的参数
 						queryParams : function(params) {
-							debugger
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 							     pageNumber : params.pageNumber,
-                                  pageSize : params.pageSize,
-                                type:$("#type").val(),
-								xmmc:$("#xmmc").val(),
-                                fileName:$("#fileName").val()
+                                  pageSize : params.pageSize  
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -61,25 +53,50 @@ function load() {
 						columns : [
 								{
 									checkbox : true
-								},								{
-                                field : 'typeName',
-                                title : '类型名称'
-                           		 },
+								},
 																{
-									field : 'xmmc', 
+									field : 'id', 
+									title : '主键id' 
+								},
+																{
+									field : 'fcbz', 
+									title : '逻辑废除：0（废除），1（正常）' 
+								},
+																{
+									field : 'gxsj', 
+									title : '修改新增删除时间' 
+								},
+																{
+									field : 'intxh', 
+									title : '序号' 
+								},
+																{
+									field : 'chrxmmc', 
 									title : '项目名称' 
 								},
-
 																{
-									field : 'fileName', 
-									title : '文件名称',
-									formatter : function(value, row, index) {
-										var e = '<a href="#" mce_href="#" title="'+value+'" onclick="openFileDialog(\''
-											+ row.id
-											+ '\')">'+value+'</a> ';
-
-										return e ;
-									}
+									field : 'intxmlx', 
+									title : '项目类型:1(pmc项目)2（epc项目）' 
+								},
+																{
+									field : 'dtmdjsj', 
+									title : '登记时间' 
+								},
+																{
+									field : 'intdjrbm', 
+									title : '登记人部门id' 
+								},
+																{
+									field : 'intdjrid', 
+									title : '登记人id' 
+								},
+																{
+									field : 'chrdjrmc', 
+									title : '登记人名称' 
+								},
+																{
+									field : 'intds', 
+									title : '栋楼数' 
 								},
 																{
 									title : '操作',
@@ -123,18 +140,6 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
-
-function  openFileDialog(id) {
-    layer.open({
-        type : 2,
-        title : '查看文件',
-        maxmin : true,
-        shadeClose : false, // 点击遮罩关闭层
-        area : [ '400px', '250px' ],
-        content : prefix + '/openFileDialog?busId=' + id+"&busType=bj_wdb" // iframe的url
-    });
-}
-
 function removeone(id) {
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]

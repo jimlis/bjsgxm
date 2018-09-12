@@ -6,18 +6,26 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.ifast.common.annotation.Log;
 import com.ifast.common.base.AdminBaseController;
 import com.ifast.common.type.EnumErrorCode;
+import com.ifast.common.utils.FileUtil;
 import com.ifast.common.utils.Result;
 import com.ifast.oss.domain.FileDO;
 import com.ifast.oss.service.FileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * <pre>
@@ -32,6 +40,9 @@ public class FileController extends AdminBaseController {
     
     @Autowired
     private FileService sysFileService;
+
+    @Autowired
+    private ConfigurableEnvironment environment;
     
     @Log("进入文件管理页面")
     @GetMapping()
@@ -132,16 +143,44 @@ public class FileController extends AdminBaseController {
     @ResponseBody
     @PostMapping("/upload")
     @RequiresPermissions("oss:file:add")
-    Result<String> upload(@RequestParam("file") MultipartFile file) {
-        String url = "";
+    Result<FileDO> upload(@RequestParam("file") MultipartFile file) {
+        FileDO fileDO =null;
         try {
-            url = sysFileService.upload(file.getBytes(), file.getOriginalFilename());
+            fileDO = sysFileService.uploadFile(file);
         } catch (IOException e) {
             e.printStackTrace();
             return Result.build(EnumErrorCode.FileUploadGetBytesError.getCode(),
                     EnumErrorCode.FileUploadGetBytesError.getMsg());
+        }catch (Exception e){
+            e.printStackTrace();
+            return Result.build(EnumErrorCode.unknowFail.getCode(),
+                    EnumErrorCode.unknowFail.getMsg());
         }
-        return Result.ok(url);
+        return Result.ok(fileDO);
+    }
+
+    @Log("下载文件")
+    @RequestMapping("/downFile/{id}")
+   public void downFile(@PathVariable("id")Long id, HttpServletRequest request, HttpServletResponse response) {
+        FileDO fileDO=sysFileService.selectById(id);
+        if(fileDO!=null){
+            String uploadPath=environment.getProperty("uploadPath");
+            String url=fileDO.getUrl();
+            String filePath=uploadPath+url;
+            try (InputStream in = new FileInputStream(new File(filePath))) {
+                FileUtil.writeFj(request,response,fileDO.getFileName(),in);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/listAll")
+    public Result<List<FileDO>> listAll(FileDO fileDO){
+        Wrapper<FileDO> wrapper = new EntityWrapper<FileDO>(fileDO);
+        List<FileDO> list = sysFileService.selectList(wrapper);
+        return Result.ok(list);
     }
     
 }

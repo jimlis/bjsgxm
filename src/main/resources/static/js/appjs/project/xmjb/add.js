@@ -11,16 +11,15 @@ function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url :"/common/job/save",
-		data : $('#signupForm').serialize(),
+		url : "/project/xmjb/save",
+		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
-		dataType: 'json',
 		error : function(request) {
-			laryer.alert("Connection error");
+			parent.layer.alert("Connection error");
 		},
 		success : function(data) {
 			if (data.code == 0) {
-				parent.layer.msg("保存成功");
+				parent.layer.msg("操作成功");
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
@@ -28,8 +27,10 @@ function save() {
 			} else {
 				parent.layer.alert(data.msg)
 			}
+
 		}
 	});
+
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";

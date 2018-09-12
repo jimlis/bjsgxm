@@ -14,6 +14,7 @@ public class ShiroUtils {
 	
 	// api
 	private final static UserDao userDao = SpringContextHolder.getBean(UserDao.class);
+
 	public static UserDO getAppUserDO() {
 	    String jwt = (String)getSubjct().getPrincipal();
 	    String userId = JWTUtil.getUserId(jwt);
