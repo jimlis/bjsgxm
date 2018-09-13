@@ -1,4 +1,4 @@
-package com.project.gsggNr.domain;
+package com.project.gsgg.domain;
 
 import java.io.Serializable;
 import java.util.Date;

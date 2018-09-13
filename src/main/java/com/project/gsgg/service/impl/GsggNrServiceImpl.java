@@ -1,11 +1,10 @@
-package com.project.gsggNr.service.impl;
+package com.project.gsgg.service.impl;
 
-import org.springframework.stereotype.Service;
-
-import com.project.gsggNr.dao.GsggNrDao;
-import com.project.gsggNr.domain.GsggNrDO;
-import com.project.gsggNr.service.GsggNrService;
 import com.ifast.common.base.CoreServiceImpl;
+import com.project.gsgg.dao.GsggNrDao;
+import com.project.gsgg.domain.GsggNrDO;
+import com.project.gsgg.service.GsggNrService;
+import org.springframework.stereotype.Service;
 
 /**
  * 

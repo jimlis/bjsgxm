@@ -29,7 +29,6 @@ function initFileShow(busType,busId) {
             parent.layer.alert("未知错误");
         },
         success : function(r) {
-        	debugger
             if(r.code==0){
                 var $fileList=$("#fileList");
         		if(r.data.length>0){

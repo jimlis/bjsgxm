@@ -40,7 +40,11 @@ public class WdbServiceImpl extends CoreServiceImpl<WdbDao, WdbDO> implements Wd
 
                 }
 
-                insertOrUpdate(wdbDO);
+                if(null==id){
+                    insert(wdbDO);
+                }else {
+                    updateById(wdbDO);
+                }
 
                 //关联附件对象
                 if(StringUtils.isNotEmpty(fileIds)){

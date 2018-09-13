@@ -50,7 +50,7 @@ public class WdbController extends AdminBaseController {
 	@RequiresPermissions("project:wdb:wdb")
 	public Result<Page<WdbDO>> list(WdbDO wdbDTO){
         Wrapper<WdbDO> wrapper = new EntityWrapper<WdbDO>().eq("fcbz",1).
-				eq(Objects.nonNull(wdbDTO.getType()),"type",wdbDTO.getType()).
+				eq(StringUtils.isNotEmpty(wdbDTO.getType()),"type",wdbDTO.getType()).
 				like(StringUtils.isNotEmpty(wdbDTO.getXmmc()),"xmmc",wdbDTO.getXmmc()).
 				like(StringUtils.isNotEmpty(wdbDTO.getFileName()),"xmmc",wdbDTO.getFileName());
         Page<WdbDO> page = wdbService.selectPage(getPage(WdbDO.class), wrapper);

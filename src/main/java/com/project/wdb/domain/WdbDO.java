@@ -29,7 +29,7 @@ public class WdbDO implements Serializable {
     /** 项目名称 */
     private String xmmc;
     /** 类型编号 */
-    private Integer type;
+    private String type;
     /** 类型名称 */
     private String typeName;
     /** 文件名称 */
@@ -76,13 +76,13 @@ public class WdbDO implements Serializable {
     /**
      * 设置：类型编号
      */
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
     /**
      * 获取：类型编号
      */
-    public Integer getType() {
+    public String getType() {
         return type;
     }
     /**

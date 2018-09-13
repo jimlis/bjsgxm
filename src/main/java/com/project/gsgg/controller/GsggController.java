@@ -2,7 +2,11 @@ package com.project.gsgg.controller;
 
 
 import java.util.Arrays;
+import java.util.Objects;
 
+import com.project.gsgg.domain.GsggNrDO;
+import com.project.gsgg.service.GsggNrService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +26,8 @@ import com.project.gsgg.domain.GsggDO;
 import com.project.gsgg.service.GsggService;
 import com.ifast.common.utils.Result;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 
  * <pre>
@@ -34,6 +40,9 @@ import com.ifast.common.utils.Result;
 public class GsggController extends AdminBaseController {
 	@Autowired
 	private GsggService gsggService;
+
+	@Autowired
+	private GsggNrService gsggNrService;
 	
 	@GetMapping()
 	@RequiresPermissions("project:gsgg:gsgg")
@@ -45,7 +54,8 @@ public class GsggController extends AdminBaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("project:gsgg:gsgg")
 	public Result<Page<GsggDO>> list(GsggDO gsggDTO){
-        Wrapper<GsggDO> wrapper = new EntityWrapper<GsggDO>(gsggDTO);
+        Wrapper<GsggDO> wrapper = new EntityWrapper<GsggDO>().eq(StringUtils.isNotEmpty(gsggDTO.getChrlx()),"chrlx",gsggDTO.getChrlx()).
+				like(StringUtils.isNotEmpty(gsggDTO.getChrbt()),"chrbt",gsggDTO.getChrbt()).eq("fcbz","1");
         Page<GsggDO> page = gsggService.selectPage(getPage(GsggDO.class), wrapper);
         return Result.ok(page);
 	}
@@ -61,6 +71,13 @@ public class GsggController extends AdminBaseController {
 	String edit(@PathVariable("id") Long id,Model model){
 		GsggDO gsgg = gsggService.selectById(id);
 		model.addAttribute("gsgg", gsgg);
+
+		GsggNrDO gsggNrDO=new GsggNrDO();
+		gsggNrDO.setIntggid(id);
+		gsggNrDO.setFcbz(1);
+		Wrapper<GsggNrDO> wrapper = new EntityWrapper<GsggNrDO>(gsggNrDO);
+		gsggNrDO = gsggNrService.selectOne(wrapper);
+		model.addAttribute("gsggnr", gsggNrDO);
 	    return "project/gsgg/edit";
 	}
 	
@@ -70,9 +87,16 @@ public class GsggController extends AdminBaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("project:gsgg:add")
-	public Result<String> save( GsggDO gsgg){
-		gsggService.insert(gsgg);
-        return Result.ok();
+	public Result<String> save(HttpServletRequest request,GsggDO gsgg){
+		String fileIds= Objects.toString(request.getParameter("fileIds"));
+		String chrggnr= Objects.toString(request.getParameter("chrggnr"));
+		try {
+			gsggService.saveGsggxx(gsgg,chrggnr,fileIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Result.fail();
+		}
+		return Result.ok();
 	}
 	/**
 	 * 修改

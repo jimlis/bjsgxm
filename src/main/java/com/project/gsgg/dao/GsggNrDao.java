@@ -1,7 +1,7 @@
-package com.project.gsggNr.dao;
+package com.project.gsgg.dao;
 
-import com.project.gsggNr.domain.GsggNrDO;
 import com.ifast.common.base.BaseDao;
+import com.project.gsgg.domain.GsggNrDO;
 
 /**
  * 

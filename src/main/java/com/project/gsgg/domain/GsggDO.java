@@ -42,7 +42,8 @@ public class GsggDO implements Serializable {
     private String chrdjrmc;
     /** 已查看次数 */
     private Integer intyckcs;
-
+    /**公告类型：详情见sys_dict表gglx参数类型*/
+    private  String chrlx;
     /**
      * 设置：主键id
      */
@@ -162,5 +163,21 @@ public class GsggDO implements Serializable {
      */
     public Integer getIntyckcs() {
         return intyckcs;
+    }
+
+    /**
+     * 获取公告类型：详情见sys_dict表gglx参数类型
+     * @return
+     */
+    public String getChrlx() {
+        return chrlx;
+    }
+
+    /**
+     * 设置公告类型：详情见sys_dict表gglx参数类型
+     * @param chrlx
+     */
+    public void setChrlx(String chrlx) {
+        this.chrlx = chrlx;
     }
 }

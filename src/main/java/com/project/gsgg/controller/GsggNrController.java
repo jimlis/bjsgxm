@@ -1,8 +1,10 @@
-package com.project.gsggNr.controller;
+package com.project.gsgg.controller;
 
 
 import java.util.Arrays;
 
+import com.project.gsgg.domain.GsggNrDO;
+import com.project.gsgg.service.GsggNrService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,6 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ifast.common.base.AdminBaseController;
-import com.project.gsggNr.domain.GsggNrDO;
-import com.project.gsggNr.service.GsggNrService;
 import com.ifast.common.utils.Result;
 
 /**

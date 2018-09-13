@@ -1,7 +1,7 @@
-package com.project.gsggNr.service;
+package com.project.gsgg.service;
 
-import com.project.gsggNr.domain.GsggNrDO;
 import com.ifast.common.base.CoreService;
+import com.project.gsgg.domain.GsggNrDO;
 
 /**
  * 

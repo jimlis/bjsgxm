@@ -218,58 +218,6 @@ public class UserServiceImpl extends CoreServiceImpl<UserDao, UserDO> implements
         return baseMapper.updateById(userDO);
     }
     
-    /**
-     * 更新个人图片
-     * 
-     * @param file
-     *            图片
-     * @param avatar_data
-     *            裁剪信息
-     * @param userId
-     *            用户ID
-     * @throws Exception
-     */
-    @Override
-    public Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception {
-        String fileName = file.getOriginalFilename();
-        fileName = FileUtil.renameToUUID(fileName);
-        String url = "";
 
-        // 获取图片后缀
-        String prefix = fileName.substring((fileName.lastIndexOf(".") + 1));
-        String[] str = avatar_data.split(",");
-        // 获取截取的x坐标
-        int x = (int) Math.floor(Double.parseDouble(str[0].split(":")[1]));
-        // 获取截取的y坐标
-        int y = (int) Math.floor(Double.parseDouble(str[1].split(":")[1]));
-        // 获取截取的高度
-        int h = (int) Math.floor(Double.parseDouble(str[2].split(":")[1]));
-        // 获取截取的宽度
-        int w = (int) Math.floor(Double.parseDouble(str[3].split(":")[1]));
-        // 获取旋转的角度
-        int r = Integer.parseInt(str[4].split(":")[1].replaceAll("}", ""));
-        try {
-            BufferedImage cutImage = ImageUtils.cutImage(file, x, y, w, h, prefix);
-            BufferedImage rotateImage = ImageUtils.rotateImage(cutImage, r);
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ImageIO.write(rotateImage, prefix, out);
-            // 转换后存入数据库
-            byte[] b = out.toByteArray();
-            url = sysFileService.upload(b, fileName);
-        } catch (Exception e) {
-            throw new IFastException("图片裁剪错误！！");
-        }
-        Map<String, Object> result = new HashMap<>();
-        FileDO sysFile = new FileDO(FileType.fileType(fileName), url, new Date());
-        if (sysFileService.insert(sysFile)) {
-            UserDO userDO = new UserDO();
-            userDO.setId(userId);
-            userDO.setPicId(sysFile.getId());
-            if (retBool(baseMapper.updateById(userDO))) {
-                result.put("url", sysFile.getUrl());
-            }
-        }
-        return result;
-    }
 
 }

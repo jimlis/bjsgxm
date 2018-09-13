@@ -23,7 +23,7 @@ public class XmjbDO implements Serializable {
     
     /** 主键id */
     @TableId
-    private Integer id;
+    private Long id;
     /** 逻辑废除：0（废除），1（正常） */
     private Integer fcbz;
     /** 修改新增删除时间 */
@@ -37,9 +37,9 @@ public class XmjbDO implements Serializable {
     /** 登记时间 */
     private Date dtmdjsj;
     /** 登记人部门id */
-    private Integer intdjrbm;
+    private Long intdjrbm;
     /** 登记人id */
-    private Integer intdjrid;
+    private Long intdjrid;
     /** 登记人名称 */
     private String chrdjrmc;
     /** 栋楼数 */
@@ -48,13 +48,13 @@ public class XmjbDO implements Serializable {
     /**
      * 设置：主键id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
     /**
      * 获取：主键id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
     /**
@@ -132,25 +132,25 @@ public class XmjbDO implements Serializable {
     /**
      * 设置：登记人部门id
      */
-    public void setIntdjrbm(Integer intdjrbm) {
+    public void setIntdjrbm(Long intdjrbm) {
         this.intdjrbm = intdjrbm;
     }
     /**
      * 获取：登记人部门id
      */
-    public Integer getIntdjrbm() {
+    public Long getIntdjrbm() {
         return intdjrbm;
     }
     /**
      * 设置：登记人id
      */
-    public void setIntdjrid(Integer intdjrid) {
+    public void setIntdjrid(Long intdjrid) {
         this.intdjrid = intdjrid;
     }
     /**
      * 获取：登记人id
      */
-    public Integer getIntdjrid() {
+    public Long getIntdjrid() {
         return intdjrid;
     }
     /**

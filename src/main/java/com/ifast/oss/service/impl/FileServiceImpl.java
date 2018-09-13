@@ -40,18 +40,6 @@ public class FileServiceImpl extends CoreServiceImpl<FileDao, FileDO> implements
     @Autowired
     private ConfigurableEnvironment environment;
 
-    @Override
-    public String upload(byte[] uploadBytes, String fileName) {
-
-        fileName = fileName.substring(0, fileName.indexOf(".")) + "-" + System.currentTimeMillis() + fileName.substring(fileName.indexOf("."));
-        fileName = ifastConfig.getProjectName() + "/" + DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN_8)
-                + "/" + fileName;
-        String url = qiNiuOSS.upload(uploadBytes, fileName);
-        FileDO sysFile = new FileDO(FileType.fileType(fileName), url, new Date());
-        super.insert(sysFile);
-        return url;
-    }
-
     /**
      * <pre>
      * 上传文件到硬盘

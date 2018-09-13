@@ -1,8 +1,19 @@
 
 var prefix = "/project/gsgg"
 $(function() {
+
+    initSel("chrlx","/common/sysDict/list/wjlx",{},"name","value");
+
 	load();
 });
+
+/**
+ * 获取类型名称
+ * @param chrlx 类型值
+ */
+function  getChrlxmc(chrlx) {
+	return $("#chrlx").find("option[value='"+chrlx+"']").text();
+}
 
 function load() {
 	$('#exampleTable')
@@ -32,7 +43,9 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 							     pageNumber : params.pageNumber,
-                                  pageSize : params.pageSize  
+                                  pageSize : params.pageSize,
+								chrlx:$("#chrlx").val(),
+								chrbt:$("#chrbt").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -54,46 +67,33 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
-									field : 'id', 
-									title : '主键id' 
-								},
-																{
-									field : 'fcbz', 
-									title : '逻辑废除：0（废除），1（正常）' 
-								},
-																{
-									field : 'gxsj', 
-									title : '修改新增删除时间' 
-								},
-																{
-									field : 'intxh', 
-									title : '序号' 
-								},
+
 																{
 									field : 'chrbt', 
-									title : '标题' 
+									title : '公告名称'
 								},
 																{
+                                field : 'chrlx',
+                                title : '类型',
+								formatter : function(value, row, index) {
+									return getChrlxmc(value) ;
+								}
+                               },
+							 									{
 									field : 'dtmfbsj', 
 									title : '发布时间' 
 								},
-																{
-									field : 'intdjrbm', 
-									title : '登记人部门id' 
-								},
-																{
-									field : 'intdjrid', 
-									title : '登记人id' 
-								},
-																{
-									field : 'chrdjrmc', 
-									title : '登记人名称' 
-								},
-																{
-									field : 'intyckcs', 
-									title : '已查看次数' 
-								},
+							                                  {
+                                field : 'fileName',
+                                title : '查看文件',
+                                formatter : function(value, row, index) {
+                                    var e = '<a href="#" mce_href="#" title="'+value+'" onclick="openFileDialog(\''
+                                        + row.id
+                                        + '\')">查看文件</a> ';
+
+                                    return e ;
+                                }
+                            },
 																{
 									title : '操作',
 									field : 'id',
@@ -122,7 +122,7 @@ function add() {
 		title : '增加',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		area : [ '800px', '720px' ],
 		content : prefix + '/add' // iframe的url
 	});
 }
@@ -193,4 +193,15 @@ function batchRemove() {
 	}, function() {
 
 	});
+}
+
+function  openFileDialog(id) {
+    layer.open({
+        type : 2,
+        title : '查看文件',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '400px', '250px' ],
+        content :  '/project/wdb/openFileDialog?busId=' + id+"&busType=bj_gsgg" // iframe的url
+    });
 }

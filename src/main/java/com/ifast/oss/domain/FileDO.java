@@ -33,7 +33,7 @@ public class FileDO extends Model<FileDO> implements Serializable {
     /**
      * 文件类型
      */
-    private Integer type;
+    private String type;
     /**
      * 文件名称
      */
@@ -71,13 +71,6 @@ public class FileDO extends Model<FileDO> implements Serializable {
 
     }
 
-    public FileDO(int type, String url, Date date) {
-        this.type=type;
-        this.url=url;
-        this.createDate=date;
-    }
-
-
     /**
      * 设置：
      */
@@ -95,14 +88,14 @@ public class FileDO extends Model<FileDO> implements Serializable {
     /**
      * 设置：文件类型
      */
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
     /**
      * 获取：文件类型
      */
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
