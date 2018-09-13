@@ -3,15 +3,22 @@ package com.ifast.common.exception.handler;
 import com.ifast.common.exception.IFastException;
 import com.ifast.common.type.EnumErrorCode;
 import com.ifast.common.utils.Result;
+import com.sun.beans.editors.StringEditor;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 异常处理器
@@ -20,6 +27,17 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
     private Logger log = LoggerFactory.getLogger(getClass());
+
+    /**
+     * 处理日期转换
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class,
+                new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+        binder.registerCustomEditor(String.class, new StringEditor());
+    }
 
     /**
      * 自定义异常

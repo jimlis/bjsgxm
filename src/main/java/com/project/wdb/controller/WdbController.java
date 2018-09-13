@@ -2,7 +2,9 @@ package com.project.wdb.controller;
 
 
 import java.util.Arrays;
+import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import com.ifast.common.base.AdminBaseController;
 import com.project.wdb.domain.WdbDO;
 import com.project.wdb.service.WdbService;
 import com.ifast.common.utils.Result;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 
@@ -45,7 +49,10 @@ public class WdbController extends AdminBaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("project:wdb:wdb")
 	public Result<Page<WdbDO>> list(WdbDO wdbDTO){
-        Wrapper<WdbDO> wrapper = new EntityWrapper<WdbDO>(wdbDTO);
+        Wrapper<WdbDO> wrapper = new EntityWrapper<WdbDO>().eq("fcbz",1).
+				eq(StringUtils.isNotEmpty(wdbDTO.getType()),"type",wdbDTO.getType()).
+				like(StringUtils.isNotEmpty(wdbDTO.getXmmc()),"xmmc",wdbDTO.getXmmc()).
+				like(StringUtils.isNotEmpty(wdbDTO.getFileName()),"xmmc",wdbDTO.getFileName());
         Page<WdbDO> page = wdbService.selectPage(getPage(WdbDO.class), wrapper);
         return Result.ok(page);
 	}
@@ -70,9 +77,14 @@ public class WdbController extends AdminBaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("project:wdb:add")
-	public Result<String> save( WdbDO wdb){
-		wdbService.insert(wdb);
-        return Result.ok();
+	public Result<String> save(HttpServletRequest request,WdbDO wdb){
+		String fileIds= Objects.toString(request.getParameter("fileIds"));
+		try {
+			wdbService.saveWdbxx(wdb,fileIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Result.ok();
 	}
 	/**
 	 * 修改
@@ -105,6 +117,14 @@ public class WdbController extends AdminBaseController {
 	public Result<String>  remove(@RequestParam("ids[]") Long[] ids){
 		wdbService.deleteBatchIds(Arrays.asList(ids));
 		return Result.ok();
+	}
+
+	@GetMapping("/openFileDialog")
+	@RequiresPermissions("project:wdb:wdb")
+	String openFileDialog(String busType, Long busId,Model model){
+		model.addAttribute("busType",busType);
+		model.addAttribute("busId",busId);
+		return "project/wdb/file";
 	}
 	
 }

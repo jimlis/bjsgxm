@@ -79,6 +79,10 @@ function validateRule() {
 				required : true,
 				email : true
 			},
+            mobile:{
+                required : true,
+                mobile:true
+			},
 			topic : {
 				required : "#newsletter:checked",
 				minlength : 2
@@ -105,6 +109,9 @@ function validateRule() {
 				equalTo : icon + "两次输入的密码不一致"
 			},
 			email : icon + "请输入您的E-mail",
+            mobile:{
+                required :icon+"请输入您的手机号"
+            }
 		}
 	})
 }

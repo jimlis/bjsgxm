@@ -1,7 +1,11 @@
 
 var prefix = "/project/wdb"
 $(function() {
+
+    initSel("type","/common/sysDict/list/wjlx",{},"name","value");
+
 	load();
+
 });
 
 function load() {
@@ -29,10 +33,14 @@ function load() {
 						queryParamsType : "",
 						// //设置为limit则会发送符合RESTFull格式的参数
 						queryParams : function(params) {
+							debugger
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 							     pageNumber : params.pageNumber,
-                                  pageSize : params.pageSize  
+                                  pageSize : params.pageSize,
+                                type:$("#type").val(),
+								xmmc:$("#xmmc").val(),
+                                fileName:$("#fileName").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -53,34 +61,25 @@ function load() {
 						columns : [
 								{
 									checkbox : true
-								},
-																{
-									field : 'id', 
-									title : '' 
-								},
-																{
-									field : 'xmid', 
-									title : '项目id' 
-								},
+								},								{
+                                field : 'typeName',
+                                title : '类型名称'
+                           		 },
 																{
 									field : 'xmmc', 
 									title : '项目名称' 
 								},
-																{
-									field : 'type', 
-									title : '类型编号' 
-								},
-																{
-									field : 'typeName', 
-									title : '类型名称' 
-								},
+
 																{
 									field : 'fileName', 
-									title : '文件名称' 
-								},
-																{
-									field : 'fcbz', 
-									title : '废除标志 1正常0 废除' 
+									title : '文件名称',
+									formatter : function(value, row, index) {
+										var e = '<a href="#" mce_href="#" title="'+value+'" onclick="openFileDialog(\''
+											+ row.id
+											+ '\')">'+value+'</a> ';
+
+										return e ;
+									}
 								},
 																{
 									title : '操作',
@@ -90,7 +89,7 @@ function load() {
 										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
 												+ row.id
 												+ '\')"><i class="fa fa-edit"></i></a> ';
-										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="removeone(\''
 												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
 										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
@@ -124,7 +123,19 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
-function remove(id) {
+
+function  openFileDialog(id) {
+    layer.open({
+        type : 2,
+        title : '查看文件',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '400px', '250px' ],
+        content : prefix + '/openFileDialog?busId=' + id+"&busType=bj_wdb" // iframe的url
+    });
+}
+
+function removeone(id) {
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
 	}, function() {

@@ -1,0 +1,3 @@
+INSERT INTO `ifast_new`.`sys_dict` (`id`, `name`, `value`, `type`, `description`, `sort`, `parentId`, `createBy`, `createDate`, `updateBy`, `updateDate`, `remarks`, `delFlag`) VALUES ('121', '项目管理', '1', 'wjlx', '项目管理', '1', '0', NULL, NULL, NULL, NULL, NULL, '0');
+INSERT INTO `ifast_new`.`sys_dict` (`id`, `name`, `value`, `type`, `description`, `sort`, `parentId`, `createBy`, `createDate`, `updateBy`, `updateDate`, `remarks`, `delFlag`) VALUES ('122', '公司日常', '2', 'wjlx', '公司日常', '2', '0', NULL, NULL, NULL, NULL, NULL, '0');
+INSERT INTO `ifast_new`.`sys_menu` (`id`, `parentId`, `name`, `url`, `perms`, `type`, `icon`, `orderNum`, `gmtCreate`, `gmtModified`) VALUES ('206', '1', '文档管理', '/project/wdb', 'project:wdb:wdb', '1', NULL, '5', NULL, NULL);

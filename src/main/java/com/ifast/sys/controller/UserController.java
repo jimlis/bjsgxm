@@ -197,14 +197,5 @@ public class UserController extends AdminBaseController {
         model.addAttribute("sexList", sexList);
         return prefix + "/personal";
     }
-    
-    @Log("上传头像")
-    @ResponseBody
-    @PostMapping("/uploadImg")
-    Result<?> uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request)
-            throws Exception {
-        Map<String, Object> result = new HashMap<>();
-        result = userService.updatePersonalImg(file, avatar_data, getUserId());
-        return Result.ok(result);
-    }
+
 }

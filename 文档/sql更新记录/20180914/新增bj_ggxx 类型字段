@@ -1,0 +1,2 @@
+ALTER TABLE `bj_gsgg`
+ADD COLUMN `chrlx`  varchar(10) NULL DEFAULT NULL COMMENT '公告类型：详情见sys_dict表gglx参数类型' AFTER `intyckcs`;

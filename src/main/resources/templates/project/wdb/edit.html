@@ -2,6 +2,7 @@
 <html>
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<link href="/css/layui.css" rel="stylesheet">
 <body class="gray-bg">
 	<div class="wrapper wrapper-content ">
 		<div class="row">
@@ -9,44 +10,46 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-						<input id="id" name="id" th:value="${wdb.id}"  type="hidden">
-							<div class="form-group">	
-								<label class="col-sm-3 control-label">项目id：</label>
+							<input id="id" name="id" th:value="${wdb.id}"  type="hidden">
+							<input type="hidden" name="fileIds" id="fileIds">
+							<input type="hidden" name="typeName" id="typeName" th:value="${wdb.typeName}">
+							<input type="hidden" name="typeValue" id="typeValue" th:value="${wdb.type}">
+							<input type="hidden" name="xmmc" id="xmmc" th:value="${wdb.xmmc}">
+							<input type="hidden" name="xmidValue" id="xmidValue" th:value="${wdb.xmid}">
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类型：</label>
 								<div class="col-sm-8">
-									<input id="xmid" name="xmid" th:value="${wdb.xmid}" class="form-control" type="text">
+									<select  name="type" id="type" onchange="typeOnchang(this)" class="selectpicker input_width100" placeholder="类型">
+									</select>
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">项目名称：</label>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">项目：</label>
 								<div class="col-sm-8">
-									<input id="xmmc" name="xmmc" th:value="${wdb.xmmc}" class="form-control" type="text">
+									<select  name="xmid" id="xmid"  onchange="xmOnchang(this)" class="selectpicker input_width100" data-live-search="true"  placeholder="项目">
+									</select>
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">类型编号：</label>
-								<div class="col-sm-8">
-									<input id="type" name="type" th:value="${wdb.type}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">类型名称：</label>
-								<div class="col-sm-8">
-									<input id="typeName" name="typeName" th:value="${wdb.typeName}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
+							<div class="form-group">
 								<label class="col-sm-3 control-label">文件名称：</label>
 								<div class="col-sm-8">
 									<input id="fileName" name="fileName" th:value="${wdb.fileName}" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">废除标志 1正常0 废除：</label>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">
+									<button type="button" class="layui-btn" id="test1" style="width: 100%;">
+										<i class="fa fa-cloud"></i>上传文件
+									</button>
+								</label>
 								<div class="col-sm-8">
-									<input id="fcbz" name="fcbz" th:value="${wdb.fcbz}" class="form-control" type="text">
+									<div id="fileList"></div>
 								</div>
 							</div>
-																					<div class="form-group">
+
+							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 									<button type="submit" class="btn btn-primary">提交</button>
 								</div>
@@ -58,6 +61,7 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
+	<script src="/js/layui.js"></script>
 	<script type="text/javascript" src="/js/appjs/project/wdb/edit.js">
 	</script>
 </body>
