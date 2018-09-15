@@ -1,33 +1,28 @@
 package com.ifast.oss.service.impl;
 
+import com.ifast.common.base.CoreServiceImpl;
+import com.ifast.common.config.IFastConfig;
+import com.ifast.common.exception.IFastException;
+import com.ifast.common.utils.FileUtil;
+import com.ifast.common.utils.ShiroUtils;
+import com.ifast.oss.dao.FileDao;
+import com.ifast.oss.domain.FileDO;
+import com.ifast.oss.service.FileService;
+import com.ifast.sys.domain.UserDO;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
-
-import com.ifast.common.exception.IFastException;
-import com.ifast.common.utils.FileUtil;
-import com.ifast.common.utils.ShiroUtils;
-import com.ifast.sys.domain.UserDO;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.stereotype.Service;
-
-import com.ifast.common.base.CoreServiceImpl;
-import com.ifast.common.config.IFastConfig;
-import com.ifast.common.utils.DateUtils;
-import com.ifast.common.utils.FileType;
-import com.ifast.oss.dao.FileDao;
-import com.ifast.oss.domain.FileDO;
-import com.ifast.oss.sdk.QiNiuOSSService;
-import com.ifast.oss.service.FileService;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * <pre>
@@ -40,8 +35,6 @@ public class FileServiceImpl extends CoreServiceImpl<FileDao, FileDO> implements
 
     @Autowired
     private IFastConfig ifastConfig;
-    @Autowired
-    private QiNiuOSSService qiNiuOSS;
 
     @Autowired
     private ConfigurableEnvironment environment;
