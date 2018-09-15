@@ -1,18 +1,18 @@
 package com.ifast.api.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ifast.common.annotation.Log;
 import com.ifast.common.base.ApiBaseController;
 import com.ifast.common.utils.Result;
+import com.ifast.common.utils.View;
+import com.ifast.oss.domain.FileDO;
 import com.ifast.oss.service.FileService;
-import com.ifast.sys.service.DeptService;
-import io.swagger.annotations.*;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * <pre>
@@ -26,4 +26,13 @@ public class ApiFileController  extends ApiBaseController {
     private FileService fileService;
 
 
+    @Log("查询文档附件列表")
+    @ResponseBody
+    @GetMapping("/wdlist")
+    @JsonView(View.WdbApp.class)
+    public Result<Page<FileDO>> list(FileDO fileDO) {
+        // 查询列表数据
+        Page<FileDO> page = fileService.selectPage(getPage(FileDO.class), fileService.convertToEntityWrapper("busType", "bj_wdb", "type", fileDO.getType()));
+        return Result.ok(page);
+    }
 }

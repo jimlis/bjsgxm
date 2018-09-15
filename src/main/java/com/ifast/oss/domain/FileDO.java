@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ifast.common.utils.View;
 
 /**
  * <pre>
@@ -21,6 +23,7 @@ public class FileDO extends Model<FileDO> implements Serializable {
     
     //
     @TableId
+    @JsonView(View.WdbApp.class)
     private Long id;
     /**
      * 业务表名
@@ -38,6 +41,7 @@ public class FileDO extends Model<FileDO> implements Serializable {
      * 文件名称
      */
     @TableField()
+    @JsonView(View.WdbApp.class)
     private  String fileName;
     /**
      * 文件大小
