@@ -30,7 +30,7 @@ public class ApiFileController  extends ApiBaseController {
     @Log("查询文档附件列表")
     @ResponseBody
     @PostMapping("/wdlist")
-    @JsonView(View.WdbApp.class)
+    @JsonView(View.FileApp.class)
     @ApiOperation(value="根据文件类型获取文档附件列表",httpMethod="POST")
     @ApiImplicitParams(@ApiImplicitParam(name="type",paramType="string",required=false,value = "文件类型"))
     @ApiResponses({@ApiResponse(code=0,message="操作成功",response=List.class),
