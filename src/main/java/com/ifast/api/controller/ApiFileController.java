@@ -36,9 +36,9 @@ public class ApiFileController  extends ApiBaseController {
     @ApiResponses({@ApiResponse(code=0,message="操作成功",response=List.class),
             @ApiResponse(code=1,message="操作失败",response=List.class)})
     @RequiresAuthentication
-    public Result<Page<FileDO>> list(FileDO fileDO) {
+    public Result<List<FileDO>> list(FileDO fileDO) {
         // 查询列表数据
         Page<FileDO> page = fileService.selectPage(getPage(FileDO.class), fileService.convertToEntityWrapper("busType", "bj_wdb", "type", fileDO.getType()));
-        return Result.ok(page);
+        return Result.ok(page.getRecords());
     }
 }
