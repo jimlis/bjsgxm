@@ -1,3 +1,5 @@
+var fileUploadSize=1024*20;
+
 jQuery.validator.addMethod("mobile", function(value, element) {
     var length = value.length;
     var mobile = /^1[345789]\d{9}$/;

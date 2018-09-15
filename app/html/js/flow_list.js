@@ -34,5 +34,5 @@ mui.ajax(fileApiPath+"wdlist",{
  * 打开文件详情
  */
 function openNext(busType,id){
-		window.location.href="open_file.html?deptId="+id;
+		window.location.href="open_file.html?id="+id;
 }

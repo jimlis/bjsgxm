@@ -81,7 +81,7 @@ layui.use('upload', function () {
     var uploadInst = upload.render({
         elem: '#test1', //绑定元素
         url: '/common/sysFile/upload', //上传接口
-        size: 1000,
+        size: fileUploadSize,
         accept: 'file',
         done: function (r) {
             if(r.code==0){
@@ -131,7 +131,6 @@ function  removeFile(id,obj) {
             },
             success : function(data) {
                 if (data.code == 0) {
-                    debugger;
                     var index = $.inArray(id,fileIds);
                     if(index>=0){//存在 就删除
                         fileIds.splice(index,1);
@@ -164,7 +163,6 @@ function initFileShow(busType,busId) {
             parent.layer.alert("未知错误");
         },
         success : function(r) {
-        	debugger
             if(r.code==0){
                 var $fileList=$("#fileList");
         		if(r.data.length>0){

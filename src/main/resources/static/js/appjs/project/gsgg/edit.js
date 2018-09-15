@@ -85,7 +85,7 @@ layui.use('upload', function () {
     var uploadInst = upload.render({
         elem: '#test1', //绑定元素
         url: '/common/sysFile/upload', //上传接口
-        size: 1000,
+        size: fileUploadSize,
         accept: 'file',
         done: function (r) {
             if(r.code==0){

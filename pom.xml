@@ -7,7 +7,7 @@
 	<groupId>com.aron</groupId>
 	<artifactId>ifast</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>ifast</name>
 	<description>Aron fast devolop framework, ifast.</description>

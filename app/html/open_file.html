@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../libs/viewer/viewer.css"/>
 	</head>
 		
 	<body>
@@ -17,10 +18,15 @@
 		    <h1 class="mui-title">文档在线打开</h1>
 		</header>
 		<div class="mui-content">
-			
+			<iframe height="100%" width="100%" id="fileIframe" style="min-height: 400px">
+
+			</iframe>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="../libs/viewer/viewer.js"/>
+		<link rel="stylesheet" type="text/css" href="../libs/pdf/pdf.js"/>
+		<link rel="stylesheet" type="text/css" href="../libs/pdf/pdf.worker.js"/>
 		<script src="js/open_file.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 

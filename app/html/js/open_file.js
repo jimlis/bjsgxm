@@ -1,12 +1,12 @@
 
 
 
+var id=getQueryString("id");
 
 
+openFile(id);
 
 
-function openmydoc(path) {
-            var doc = new ActiveXObject("Word.Application");
-            doc.visible = true;
-            doc.Documents.Open(path);
-        }
+function openFile(id) {
+            document.getElementById("fileIframe").setAttribute("src",serverPath+"/js/plugins/PDFViewer/web/viewer.html?file=/api/file/down/"+id);
+    }

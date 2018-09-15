@@ -3,7 +3,6 @@ package com.ifast.common.exception.handler;
 import com.ifast.common.exception.IFastException;
 import com.ifast.common.type.EnumErrorCode;
 import com.ifast.common.utils.Result;
-import com.sun.beans.editors.StringEditor;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -36,7 +35,6 @@ public class ApplicationExceptionHandler {
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class,
                 new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
-        binder.registerCustomEditor(String.class, new StringEditor());
     }
 
     /**
