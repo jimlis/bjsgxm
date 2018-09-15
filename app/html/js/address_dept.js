@@ -1,6 +1,6 @@
 
-var deptId = getRequest(location.search).deptId||0;
-console.log( deptId ); 
+var obj = getRequest(location.search);
+var deptId = obj.deptId||0;
 mui.ajax(deptApiPath+"getNextDeptAndUser",{
 	data:{
 		deptId:deptId
@@ -10,7 +10,6 @@ mui.ajax(deptApiPath+"getNextDeptAndUser",{
 	timeout:10000,//超时时间设置为10秒；
 	headers:{'Content-Type':'application/x-www-form-urlencoded'},	              
 	success:function(data){
-		
 		//服务器返回响应，根据响应结果，分析是否登录成功；
 		if(data.code==0){
 			var array = data.data;
