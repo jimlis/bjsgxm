@@ -2,6 +2,7 @@ package com.ifast.api.controller;
 
 import java.util.List;
 
+import com.ifast.common.base.ApiBaseController;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/api/dept/")
-public class ApiDeptController{
+public class ApiDeptController extends ApiBaseController {
     @Autowired
     private DeptService deptService;
 
