@@ -1,5 +1,6 @@
 package com.ifast.api.controller;
 
+import com.ifast.common.base.ApiBaseController;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/user/")
 //@Api(tags = { "测试API" })
-public class ApiUserController{
+public class ApiUserController extends ApiBaseController {
     @Autowired
     private UserService userService;
     

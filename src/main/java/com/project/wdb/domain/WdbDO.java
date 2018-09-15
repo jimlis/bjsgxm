@@ -6,7 +6,8 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ifast.common.utils.View;
 
 
 /**
@@ -23,10 +24,12 @@ public class WdbDO implements Serializable {
     
     /**  */
     @TableId
+    @JsonView(View.WdbApp.class)
     private Long id;
     /** 项目id */
     private Long xmid;
     /** 项目名称 */
+    @JsonView(View.WdbApp.class)
     private String xmmc;
     /** 类型编号 */
     private String type;
