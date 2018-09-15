@@ -40,6 +40,5 @@ function openNext(lx,id){
 	}else{
 		window.location.href="address_user.html?userId="+id;
 	}
-	
 }
 

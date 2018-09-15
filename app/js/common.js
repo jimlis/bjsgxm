@@ -25,7 +25,7 @@ function open(fa,sub,id,url) {
 var serverPath="http://127.0.0.1:8080/";
 var userApiPath=serverPath+"api/user/";
 var deptApiPath=serverPath+"api/dept/";
-var archApiPath=serverPath+"api/arch/";
+var fileApiPath=serverPath+"api/file/";
 
 /**
  * 将null undefined  "null" 转换为 ""
