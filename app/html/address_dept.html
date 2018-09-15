@@ -9,8 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" href="../css/mui.min.css" />
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
-		<script type="text/javascript" src="../js/common.js" ></script>
-		<script src="js/address_dept.js" type="text/javascript" charset="utf-8"></script>
+		
 	</head>
 		
 	<body>
@@ -20,22 +19,21 @@
 		</header>
 		<div class="mui-content">
 			<ul class="mui-table-view" id="unit">
-				
+				<li class="mui-table-view-cell">正在加载</li>
 			</ul>
 			<ul class="mui-table-view" id="user">
 				
 			</ul>
 		</div>
-		<script type="text/javascript" src="../js/jquery.min.js" ></script>
-		<script type="text/javascript" src="../js/common.js" ></script>
-		<script type="text/javascript" src="../js/ajax-util.js" ></script>
-		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/address_dept.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			mui.init({});
-			$(function(){
-				var deptId=getQueryString("deptId");
-				init(deptId);
-			})
+//			$(function(){
+//				var deptId=getQueryString("deptId");
+//				init(deptId);
+//			})
 		</script>
 	</body>
 
