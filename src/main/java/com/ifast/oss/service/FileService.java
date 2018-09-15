@@ -4,6 +4,9 @@ import com.ifast.common.base.CoreService;
 import com.ifast.oss.domain.FileDO;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <pre>
  * 文件上传
@@ -20,4 +23,12 @@ public interface FileService extends CoreService<FileDO> {
      * @return FileDO 文件对象
      */
     FileDO uploadFile (MultipartFile file) throws Exception;
+
+    /**
+     * 根据附件id下载附件
+     * @param id
+     * @param request
+     * @param response
+     */
+    void downFile(Long id, HttpServletRequest request, HttpServletResponse response);
 }

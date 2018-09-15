@@ -1,6 +1,7 @@
 package com.ifast.api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ifast.common.base.ApiBaseController;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -32,11 +33,11 @@ public class ApiDeptController extends ApiBaseController {
 
     @PostMapping("getNextDeptAndUser")
     @ApiOperation(value="根据部门id获取下一级部门、人员信息",httpMethod="POST")
-    @ApiImplicitParams(@ApiImplicitParam(name="deptId",paramType="string",required=false,defaultValue="0"))
+    @ApiImplicitParams(@ApiImplicitParam(name="deptId",paramType="string",required=false,defaultValue="0",value = "部门id"))
     @ApiResponses({@ApiResponse(code=0,message="操作成功",response=List.class),
     	@ApiResponse(code=1,message="操作失败",response=List.class)})
     @RequiresAuthentication
-    public Result<?> getNextDeptAndUser(@RequestParam(name="deptId",defaultValue="0")  Long deptId) {
+    public Result<List<Map<String,Object>>> getNextDeptAndUser(@RequestParam(name="deptId",defaultValue="0")  Long deptId) {
         return Result.ok(deptService.getNextDeptAndUser(deptId));
     }
 }

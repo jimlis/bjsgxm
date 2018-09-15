@@ -1,11 +1,14 @@
 package com.ifast.oss.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
 import com.ifast.common.exception.IFastException;
+import com.ifast.common.utils.FileUtil;
 import com.ifast.common.utils.ShiroUtils;
 import com.ifast.sys.domain.UserDO;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +25,9 @@ import com.ifast.oss.domain.FileDO;
 import com.ifast.oss.sdk.QiNiuOSSService;
 import com.ifast.oss.service.FileService;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <pre>
@@ -87,5 +93,20 @@ public class FileServiceImpl extends CoreServiceImpl<FileDao, FileDO> implements
         fileDO.setUrl(url);
         insert(fileDO);
         return fileDO;
+    }
+
+    @Override
+    public void downFile(Long id, HttpServletRequest request, HttpServletResponse response) {
+        FileDO fileDO=selectById(id);
+        if(fileDO!=null){
+            String uploadPath=environment.getProperty("uploadPath");
+            String url=fileDO.getUrl();
+            String filePath=uploadPath+url;
+            try (InputStream in = new FileInputStream(new File(filePath))) {
+                FileUtil.writeFj(request,response,fileDO.getFileName(),in);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

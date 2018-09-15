@@ -162,17 +162,7 @@ public class FileController extends AdminBaseController {
     @Log("下载文件")
     @RequestMapping("/downFile/{id}")
    public void downFile(@PathVariable("id")Long id, HttpServletRequest request, HttpServletResponse response) {
-        FileDO fileDO=sysFileService.selectById(id);
-        if(fileDO!=null){
-            String uploadPath=environment.getProperty("uploadPath");
-            String url=fileDO.getUrl();
-            String filePath=uploadPath+url;
-            try (InputStream in = new FileInputStream(new File(filePath))) {
-                FileUtil.writeFj(request,response,fileDO.getFileName(),in);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+        sysFileService.downFile(id,request,response);
     }
 
     @ResponseBody

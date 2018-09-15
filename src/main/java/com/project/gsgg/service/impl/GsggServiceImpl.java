@@ -2,6 +2,7 @@ package com.project.gsgg.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.ifast.api.pojo.vo.GsggDetailsVo;
 import com.ifast.common.utils.ShiroUtils;
 import com.ifast.oss.domain.FileDO;
 import com.ifast.oss.service.FileService;
@@ -18,6 +19,7 @@ import com.project.gsgg.service.GsggService;
 import com.ifast.common.base.CoreServiceImpl;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -50,6 +52,7 @@ public class GsggServiceImpl extends CoreServiceImpl<GsggDao, GsggDO> implements
                         gsggDO.setIntdjrid(userDO.getId());
                         gsggDO.setChrdjrmc(userDO.getName());
                         gsggDO.setIntdjrbm(userDO.getDeptId());
+                        gsggDO.setChrdjrbmmc(userDO.getDeptName());
                     }else{// 保存
 
                     }
@@ -98,5 +101,40 @@ public class GsggServiceImpl extends CoreServiceImpl<GsggDao, GsggDO> implements
                             }
                         }
                     }
+        }
+
+    /**
+     * 根据公司公告id获取公告详情信息
+     * @param id 公告id
+     * @return  GsggDetailsVo 公告详情信息
+     */
+    @Override
+    public GsggDetailsVo getGsggDetailsById(Long id){
+        // 公告基本信息
+        GsggDO gsggDO=selectById(id);
+
+        //查询文本信息
+        GsggNrDO gsggNrDO=new GsggNrDO();
+        gsggNrDO.setFcbz(1);
+        gsggNrDO.setIntggid(id);
+        EntityWrapper<GsggNrDO> gsggNrDOEntityWrapper=new EntityWrapper<GsggNrDO>(gsggNrDO);
+        gsggNrDO = gsggNrService.selectOne(gsggNrDOEntityWrapper);
+
+        //查询公告相关附件信息
+        FileDO fileDO=new FileDO();
+        fileDO.setBusId(id);
+        fileDO.setBusType("bj_gsgg");
+        EntityWrapper<FileDO> fileDOEntityWrapper=new EntityWrapper<FileDO>(fileDO);
+        List<FileDO> fileDOList=fileService.selectList(fileDOEntityWrapper);
+
+        GsggDetailsVo gsggDetailsVo=new GsggDetailsVo();
+        gsggDetailsVo.setId(gsggDO.getId());
+        gsggDetailsVo.setChrbt(gsggDO.getChrbt());
+        gsggDetailsVo.setDtmfbsj(gsggDO.getDtmfbsj());
+        gsggDetailsVo.setChrdjrmc(gsggDO.getChrdjrmc());
+        gsggDetailsVo.setChrdjrbmmc(gsggDO.getChrdjrbmmc());
+        gsggDetailsVo.setChrggnr(gsggNrDO.getChrggnr());
+        gsggDetailsVo.setFileList(fileDOList);
+        return  gsggDetailsVo;
         }
 }

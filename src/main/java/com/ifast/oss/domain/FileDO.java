@@ -23,7 +23,7 @@ public class FileDO extends Model<FileDO> implements Serializable {
     
     //
     @TableId
-    @JsonView(View.WdbApp.class)
+    @JsonView(View.FileApp.class)
     private Long id;
     /**
      * 业务表名
@@ -41,7 +41,7 @@ public class FileDO extends Model<FileDO> implements Serializable {
      * 文件名称
      */
     @TableField()
-    @JsonView(View.WdbApp.class)
+    @JsonView(View.FileApp.class)
     private  String fileName;
     /**
      * 文件大小

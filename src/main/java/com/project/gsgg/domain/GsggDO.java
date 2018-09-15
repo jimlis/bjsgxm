@@ -6,7 +6,9 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.ifast.common.utils.View;
 
 
 /**
@@ -23,6 +25,7 @@ public class GsggDO implements Serializable {
     
     /** 主键id */
     @TableId
+    @JsonView(View.GsggListApp.class)
     private Long id;
     /** 逻辑废除：0（废除），1（正常） */
     private Integer fcbz;
@@ -33,12 +36,18 @@ public class GsggDO implements Serializable {
     /** 标题 */
     private String chrbt;
     /** 发布时间 */
+    @JsonView(View.GsggListApp.class)
+    @JsonFormat(pattern ="yyyy-MM-dd",timezone = "GMT+8")
     private Date dtmfbsj;
     /** 登记人部门id */
     private Long intdjrbm;
+    /**登记人部门名称*/
+    @JsonView(View.GsggListApp.class)
+    private String chrdjrbmmc;
     /** 登记人id */
     private Long intdjrid;
     /** 登记人名称 */
+    @JsonView(View.GsggListApp.class)
     private String chrdjrmc;
     /** 已查看次数 */
     private Integer intyckcs;
@@ -179,5 +188,19 @@ public class GsggDO implements Serializable {
      */
     public void setChrlx(String chrlx) {
         this.chrlx = chrlx;
+    }
+
+    /**
+     * 获取登记人部门名称
+     */
+    public String getChrdjrbmmc() {
+        return chrdjrbmmc;
+    }
+
+    /**
+     * 设置登记人部门 名称
+     */
+    public void setChrdjrbmmc(String chrdjrbmmc) {
+        this.chrdjrbmmc = chrdjrbmmc;
     }
 }

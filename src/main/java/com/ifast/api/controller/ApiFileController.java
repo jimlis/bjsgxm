@@ -13,6 +13,8 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -30,7 +32,6 @@ public class ApiFileController  extends ApiBaseController {
     @Log("查询文档附件列表")
     @ResponseBody
     @PostMapping("/wdlist")
-    @JsonView(View.FileApp.class)
     @ApiOperation(value="根据文件类型获取文档附件列表",httpMethod="POST")
     @ApiImplicitParams(@ApiImplicitParam(name="type",paramType="string",required=false,value = "文件类型"))
     @ApiResponses({@ApiResponse(code=0,message="操作成功",response=List.class),
@@ -40,5 +41,14 @@ public class ApiFileController  extends ApiBaseController {
         // 查询列表数据
         Page<FileDO> page = fileService.selectPage(getPage(FileDO.class), fileService.convertToEntityWrapper("busType", "bj_wdb", "type", fileDO.getType()));
         return Result.ok(page.getRecords());
+    }
+
+    @Log("附件下载")
+    @GetMapping("/down/{id}")
+    @ApiOperation(value="根据附件id下载附件",httpMethod="GET")
+    @ApiImplicitParams(@ApiImplicitParam(name="id",paramType="long",required=true,value = "附件id"))
+    @RequiresAuthentication
+    public void list(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) {
+            fileService.downFile(id,request,response);
     }
 }
