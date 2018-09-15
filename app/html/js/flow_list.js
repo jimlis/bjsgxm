@@ -16,7 +16,7 @@ mui.ajax(fileApiPath+"wdlist",{
 			  	var fileName = item.fileName;
 			 	var id = item.id;
 			 	var busType = item.busType;
-				mui(".mui-content .mui-table-view")[0].innerHTML +="<li class=\"mui-table-view-cell\" onclick=\"openNext('"+busType+"','"+id+"');\">"+fileName+"</li>";
+				mui(".mui-content .mui-table-view")[0].innerHTML +="<li class=\"mui-table-view-cell\" onclick=\"openNext('"+id+"','"+fileName+"');\">"+fileName+"</li>";
 			})
 			mui(".mui-content .mui-table-view-cell")[0].style.display="none";
 		}else{
@@ -33,6 +33,6 @@ mui.ajax(fileApiPath+"wdlist",{
 /**
  * 打开文件详情
  */
-function openNext(busType,id){
-		window.location.href="open_file.html?id="+id;
+function openNext(id,fileName){
+    openFileByName(id,fileName);
 }

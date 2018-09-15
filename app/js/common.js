@@ -75,3 +75,16 @@ function getQueryString(name) {
     if (r != null) return unescape(r[2]);
     return null;
 }
+
+/**
+ *根据文件名称选择打开方式
+ * @param fileId 文件id
+ * @param fileName 文件名称
+ */
+function openFileByName(fileId,fileName) {
+	if(fileName.slice(-".pdf".length)==".pdf"){//pdf文件
+        window.location.href="open_file.html?id="+fileId;
+	}else{
+		window.open(fileApiPath+"/down/"+fileId);
+	}
+}
