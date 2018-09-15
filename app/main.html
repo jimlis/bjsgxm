@@ -7,11 +7,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="stylesheet" type="text/css" href="css/mui.min.css"/>
-		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			document.write("<link rel=\"stylesheet\" href=\"css/app.css?"+Math.random()+"\" type=\"text/css\" media=\"screen\"/>");
-			document.write("<script src=\"js/common.js?"+Math.random()+"\" type=\"text/javascript\" charset=\"utf-8\"><\/script>");
-		</script>
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav" >
@@ -19,19 +15,19 @@
 		</header>
 		<div class="mui-content">
 		        <ul id="list" class="mui-table-view mui-grid-view mui-grid-9">
-		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/management_architecture/zn.html'>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/architecture_list.html'>
 		                    <div class="mui-media-body" >管理架构及各功能</div>
 		                    <div class="mui-media-body" >组别职能</div></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/management_process/gllc.html'>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/flow_list.html'>
 		                    <div class="mui-media-body" >项目各项程序之</div>
 		                    <div class="mui-media-body">管理流程</div></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/management_process/splc.html'>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/process_list.html'>
 		                    <div class="mui-media-body">标准工作审批</div>
 		                    <div class="mui-media-body">流程表格</div></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/txl/zzjg.html'>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/address_dept.html'>
 		                    <div class="mui-media-body" >组织功能组别/项目管</div>
 		                    <div class="mui-media-body" >理部人员联系讯息</div></li>
-		        	<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/notice/gg.html'>
+		       	 	<li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4" url='html/notice_list.html'>
 		                   <div class="mui-media-body">公司公告</div>
 		                   <div class="mui-media-body"></div></li>
 		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
@@ -43,14 +39,12 @@
 		                    <div class="mui-media-body"></div></li>
 		            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-4">
 		                    <div class="mui-media-body">PMC项目</div>
-		                    <div class="mui-media-body" value= "22"></div></li>
-		            
+		                    <div class="mui-media-body" ></div></li>
 		        </ul> 
 		</div>
-		
-		
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			mui.init();
 			open('.mui-content','.mui-table-view-cell');
 		</script>
 	</body>
