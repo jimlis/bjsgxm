@@ -45,7 +45,15 @@
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			open('.mui-content','.mui-table-view-cell');
+            mui('.mui-content').on('tap', '.mui-table-view-cell', function () {
+                url = this.getAttribute("url");
+                if (url!=null) {
+                    window.location.href=url;
+                } else{
+                    console.log('没有url');
+                }
+
+            });
 		</script>
 	</body>
 </html>
