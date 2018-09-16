@@ -1,14 +1,10 @@
 package com.ifast.api.service.impl;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.cache.Cache;
-import org.springframework.stereotype.Service;
-
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.ifast.api.config.JWTConfig;
 import com.ifast.api.exception.IFastApiException;
 import com.ifast.api.pojo.vo.TokenVO;
-import com.ifast.api.service.UserService;
+import com.ifast.api.service.ApiUserService;
 import com.ifast.api.util.JWTUtil;
 import com.ifast.common.base.CoreServiceImpl;
 import com.ifast.common.config.CacheConfiguration;
@@ -18,6 +14,9 @@ import com.ifast.common.utils.MD5Utils;
 import com.ifast.common.utils.SpringContextHolder;
 import com.ifast.sys.dao.UserDao;
 import com.ifast.sys.domain.UserDO;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.cache.Cache;
+import org.springframework.stereotype.Service;
 
 /**
  * <pre>
@@ -26,7 +25,7 @@ import com.ifast.sys.domain.UserDO;
  * <small> 2018年4月27日 | Aron</small>
  */
 @Service
-public class UserServiceImpl extends CoreServiceImpl<UserDao,UserDO> implements UserService {
+public class ApiUserServiceImpl extends CoreServiceImpl<UserDao,UserDO> implements ApiUserService {
 	/** Holder for lazy-init */
 	private static class Holder {
 		static final JWTConfig jwt = SpringContextHolder.getBean(IFastConfig.class).getJwt();

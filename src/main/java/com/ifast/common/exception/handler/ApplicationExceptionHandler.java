@@ -77,6 +77,7 @@ public class ApplicationExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Result<String> handleException(Exception e) {
+        e.printStackTrace();
         log.error(e.getMessage());
         return Result.build(EnumErrorCode.unknowFail.getCode(), EnumErrorCode.unknowFail.getMsg());
     }

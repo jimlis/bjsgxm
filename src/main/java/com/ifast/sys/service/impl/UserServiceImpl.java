@@ -46,7 +46,7 @@ import com.ifast.sys.vo.UserVO;
  * <small> 2018年3月23日 | Aron</small>
  */
 @Transactional
-@Service("sysUserServiceImpl")
+@Service
 public class UserServiceImpl extends CoreServiceImpl<UserDao, UserDO> implements UserService {
     @Autowired
     UserRoleDao userRoleMapper;
@@ -60,7 +60,10 @@ public class UserServiceImpl extends CoreServiceImpl<UserDao, UserDO> implements
     	//查询用户拥有的角色
         List<Long> roleIds = userRoleMapper.listRoleId(id);
         UserDO user = baseMapper.selectById(id);
-        user.setDeptName(deptMapper.selectById(user.getDeptId()).getName());
+        DeptDO deptDO = deptMapper.selectById(user.getDeptId());
+        if(deptDO!=null){
+            user.setDeptName(deptDO.getName());
+        }
         user.setroleIds(roleIds);
         return user;
     }

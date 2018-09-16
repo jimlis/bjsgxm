@@ -1,16 +1,11 @@
 package com.ifast.api.shiro;
 
 import com.ifast.api.exception.IFastApiException;
+import com.ifast.api.service.ApiUserService;
 import com.ifast.common.utils.JSONUtils;
 import com.ifast.common.utils.Result;
+import com.ifast.common.utils.SpringContextHolder;
 import org.apache.commons.lang3.StringUtils;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.subject.Subject;
@@ -20,8 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ifast.api.service.UserService;
-import com.ifast.common.utils.SpringContextHolder;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 /**
  * <pre>
@@ -57,7 +55,7 @@ public class JWTAuthenticationFilter extends BasicHttpAuthenticationFilter {
             try {
             	HttpServletRequest httpServletRequest = (HttpServletRequest) request;
                 String authorization = httpServletRequest.getHeader("Authorization");
-                if(!SpringContextHolder.getBean(UserService.class).verifyToken(authorization, false)) {
+                if(!SpringContextHolder.getBean(ApiUserService.class).verifyToken(authorization, false)) {
                 	getSubject(request, response).logout();
                 }else {
 	                JWTAuthenticationTokenToken token = new JWTAuthenticationTokenToken(authorization);

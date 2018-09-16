@@ -9,7 +9,7 @@ import com.ifast.sys.domain.UserDO;
  * </pre>
  * <small> 2018年4月27日 | Aron</small>
  */
-public interface UserService extends CoreService<UserDO> {
+public interface ApiUserService extends CoreService<UserDO> {
     /** 申请token */
     TokenVO getToken(String uname, String passwd) ;
     /** 刷新token */

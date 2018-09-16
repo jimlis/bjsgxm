@@ -1,28 +1,19 @@
 package com.ifast.api.controller;
 
+import com.ifast.api.pojo.vo.TokenVO;
+import com.ifast.api.service.ApiUserService;
 import com.ifast.common.base.ApiBaseController;
+import com.ifast.common.utils.Result;
+import com.ifast.sys.domain.UserDO;
+import com.ifast.sys.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.ifast.api.pojo.vo.TokenVO;
-import com.ifast.api.service.UserService;
-import com.ifast.api.util.JWTUtil;
-import com.ifast.common.utils.Result;
-import com.ifast.sys.domain.UserDO;
-
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <pre>
@@ -36,17 +27,16 @@ import io.swagger.annotations.ApiOperation;
 //@Api(tags = { "测试API" })
 public class ApiUserController extends ApiBaseController {
     @Autowired
-    private UserService userService;
+    private ApiUserService apiUserService;
     
     @Autowired
-    @Qualifier("sysUserServiceImpl")
-    private com.ifast.sys.service.UserService sysUserService;
+    private UserService userService;
 
     @PostMapping("login")
 //    @Log("api测试-登录")
     @ApiOperation("api测试-登录")
     public Result<?> token(UserDO userDo) {
-        TokenVO token = userService.getToken(userDo.getMobile(), userDo.getPassword());
+        TokenVO token = apiUserService.getToken(userDo.getMobile(), userDo.getPassword());
         return Result.build(Result.CODE_SUCCESS,"登录成功",token);
     }
     
@@ -54,7 +44,7 @@ public class ApiUserController extends ApiBaseController {
 //    @Log("api测试-刷新token")
     @ApiOperation("api测试-刷新token")
     public Result<?> refresh(@RequestParam String uname, @RequestBody final String refresh_token) {
-    	TokenVO token = userService.refreshToken(uname, refresh_token);
+    	TokenVO token = apiUserService.refreshToken(uname, refresh_token);
     	return Result.ok(token);
     }
     
@@ -62,7 +52,7 @@ public class ApiUserController extends ApiBaseController {
 //    @Log("api测试-刷新token")
     @ApiOperation("api测试-注销token")
     public Result<?> logout(String token, String refresh_token) {
-    	Boolean expire = userService.logoutToken(token, refresh_token);
+    	Boolean expire = apiUserService.logoutToken(token, refresh_token);
     	return Result.ok(expire);
     }
 
@@ -96,7 +86,7 @@ public class ApiUserController extends ApiBaseController {
   @PostMapping("getUserById")
   @ApiOperation("根据用户id获取用户信息")
   public Result<?> getUserById(String userId) {
-      return Result.build(Result.CODE_SUCCESS,"获取成功",sysUserService.selectById(userId));
+      return Result.build(Result.CODE_SUCCESS,"获取成功",userService.selectById(userId));
   }
 
 }

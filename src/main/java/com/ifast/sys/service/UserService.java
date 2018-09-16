@@ -18,7 +18,6 @@ import com.ifast.sys.vo.UserVO;
  * 
  * <small> 2018年3月23日 | Aron</small>
  */
-@Service("sysUserService")
 public interface UserService extends CoreService<UserDO> {
 	 /**
      * 根据参数判断用户是否存在
